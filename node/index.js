@@ -530,7 +530,7 @@ var validateDefinition = function (type, data) {
     return valid;
 };
 
-var jIO = require('./lib/jio.js').jIO;
+var jIO = require('@nexedi/jio');
 var queryPortalType = 'portal_type';
 var PortalTypes;
 (function (PortalTypes) {

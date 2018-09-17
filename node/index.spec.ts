@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import 'mocha';
 
-const jioImport = require('./lib/jio.js');
+const jIO = require('@nexedi/jio');
 
 import { ClearRoad } from './';
 
@@ -21,7 +21,7 @@ class FakeJio {
 describe('ClearRoad', () => {
   beforeEach(() => {
     stubs = [];
-    stubs.push(sinon.stub(jioImport.jIO, 'createJIO').returns(new FakeJio()));
+    stubs.push(sinon.stub(jIO, 'createJIO').returns(new FakeJio()));
   });
 
   afterEach(() => {

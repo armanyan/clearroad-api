@@ -62,6 +62,7 @@
   "author": "Guillaume Royer <guillaumeroyer@gmail.com>",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@nexedi/jio": "^3.33.0",
     "ajv": "^6.5.4",
     "form-data": "^2.3.2",
     "jsonschema": "^1.2.4",

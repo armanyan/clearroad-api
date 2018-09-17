@@ -69,7 +69,7 @@ const node = {
     replace({
       delimiters: ['',''],
       values: {
-        "require('../lib/jio.js');": "var jIO = require('./lib/jio.js').jIO;"
+        "require('../lib/jio.js');": "var jIO = require('@nexedi/jio');"
       }
     }),
     buble()
