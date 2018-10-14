@@ -16,7 +16,7 @@ export declare type storageName = 'messages' | 'ingestion-reports' | 'directorie
 export declare type localStorageType = 'indexeddb' | 'dropbox' | 'gdrive';
 export interface IOptions {
     localStorage?: {
-        type: localStorageType;
+        type: localStorageType | string;
         accessToken?: string;
     };
     maxDate?: Date | number | string;
@@ -66,6 +66,9 @@ export interface IPostRoadMessage extends IPostData {
 }
 export declare type postData = IPostRoadAccountMessage | IPostBillingPeriodMessage | IPostRoadReportRequest | IPostRoadEventMessage | IPostRoadMessage;
 export declare class ClearRoad {
+    private url;
+    private accessToken?;
+    private options;
     private messagesStorage;
     private ingestionReportStorage;
     private directoryStorage;

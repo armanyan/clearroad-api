@@ -59,7 +59,7 @@
     "type": "git",
     "url": "git+https://github.com/clearroad/clearroad-api.git"
   },
-  "author": "Guillaume Royer <guillaumeroyer@gmail.com>",
+  "author": "Guillaume Royer <guillaume.royer@clearroad.io>",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "ajv": "^6.5.4",
