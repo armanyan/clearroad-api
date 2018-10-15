@@ -7,6 +7,7 @@ test/
 CHANGELOG.md
 commitlint.config.js
 CONTRIBUTING.md
+definitions.js
 deploy.js
 karma.conf.*
 rollup.config.js
