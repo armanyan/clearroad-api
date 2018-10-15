@@ -14,6 +14,7 @@ const typescriptOptions = {
   typescript: require('typescript')
 };
 const jio = path.resolve(__dirname, 'lib/jio.js');
+const requireJio = "var jIO = require('../node/lib/jio.js').jIO;";
 
 const cjs = {
   external: [
@@ -39,7 +40,7 @@ const cjs = {
     replace({
       delimiters: ['',''],
       values: {
-        "require('../node/lib/jio.js');": "var jIO = require('../../node/lib/jio.js').jIO;"
+        [requireJio]: "var jIO = require('../../node/lib/jio.js').jIO;"
       }
     })
   ]
@@ -69,7 +70,7 @@ const node = {
     replace({
       delimiters: ['',''],
       values: {
-        "require('../node/lib/jio.js');": "var jIO = require('./lib/jio.js').jIO;"
+        [requireJio]: "var jIO = require('./lib/jio.js').jIO;"
       }
     }),
     buble()
@@ -115,7 +116,7 @@ export default window.Rusha;
     replace({
       delimiters: ['',''],
       values: {
-        "require('../node/lib/jio.js');": '',
+        [requireJio]: '',
         "var Ajv = require('ajv');": 'var Ajv = window.Ajv;'
       }
     }),

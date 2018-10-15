@@ -1,13 +1,11 @@
 import RSVP from 'rsvp';
 import Rusha from 'rusha';
-require('../node/lib/jio.js');
+const jIO = require('../node/lib/jio.js').jIO;
 
 import { portalType } from './message-types';
 import { validateDefinition } from './definitions/index';
 import { IQueue } from './queue';
 import { IJioProxyStorage, IJioQueryOptions } from './storage';
-
-declare var jIO;
 
 const queryPortalType = 'portal_type';
 

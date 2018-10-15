@@ -1,6 +1,5 @@
 /* tslint:disable: no-console */
-declare var jIO;
-
+import * as jioImport from '../node/lib/jio.js';
 import { ClearRoad } from './clearroad';
 import * as definitions from './definitions';
 
@@ -16,7 +15,7 @@ class FakeJio {
 
 describe('ClearRoad', () => {
   beforeEach(() => {
-    spyOn(jIO, 'createJIO').and.returnValue(new FakeJio());
+    spyOn(jioImport.jIO, 'createJIO').and.returnValue(new FakeJio());
   });
 
   describe('constructor', () => {
@@ -43,6 +42,171 @@ describe('ClearRoad', () => {
     it('should defaul to local storage', () => {
       const cr = new ClearRoad(url);
       expect((cr as any).useLocalStorage).toEqual(true);
+    });
+  });
+
+  describe('.queryMaxDate', () => {
+    let cr;
+    let maxDate: Date;
+
+    beforeEach(() => {
+      cr = new ClearRoad(url);
+      maxDate = new Date();
+    });
+
+    describe('with a maxDate', () => {
+      beforeEach(() => {
+        cr.options = {maxDate};
+      });
+
+      it('should return a subquery', () => {
+        expect(cr.queryMaxDate()).toEqual(`modification_date: >= "${maxDate.toJSON()}"`);
+      });
+    });
+
+    describe('without a maxDate', () => {
+      beforeEach(() => {
+        cr.options = {};
+      });
+
+      it('should return an empty string', () => {
+        expect(cr.queryMaxDate()).toEqual('');
+      });
+    });
+  });
+
+  describe('.localSubStorage', () => {
+    let cr;
+    const reference = 'reference';
+
+    beforeEach(() => {
+      cr = new ClearRoad(url);
+    });
+
+    describe('using "dropbox"', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'dropbox'
+          }
+        };
+      });
+
+      it('should surround with a query storage', () => {
+        expect(cr.localSubStorage(reference)).toEqual({
+          type: 'mapping',
+          sub_storage: {
+            type: 'query',
+            sub_storage: {
+              type: 'dropbox'
+            }
+          },
+          mapping_dict: {
+            portal_type: ['equalSubProperty', reference]
+          }
+        });
+      });
+    });
+
+    describe('using "indexeddb"', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'indexeddb'
+          }
+        };
+      });
+
+      it('should surround with a query storage', () => {
+        expect(cr.localSubStorage(reference)).toEqual({
+          type: 'query',
+          sub_storage: {
+            type: 'indexeddb',
+            database: 'clearroad'
+          }
+        });
+      });
+    });
+
+    describe('using any other storage', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'storage'
+          }
+        };
+      });
+
+      it('should return the config', () => {
+        expect(cr.localSubStorage(reference)).toEqual({
+          type: 'storage'
+        });
+      });
+    });
+  });
+
+  describe('.signatureSubStorage', () => {
+    let cr;
+    const database = 'database';
+
+    beforeEach(() => {
+      cr = new ClearRoad(url);
+    });
+
+    describe('using "dropbox"', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'dropbox'
+          }
+        };
+      });
+
+      it('should surround with a query storage', () => {
+        expect(cr.signatureSubStorage(database)).toEqual({
+          type: 'query',
+          sub_storage: {
+            type: 'memory'
+          }
+        });
+      });
+    });
+
+    describe('using "indexeddb"', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'indexeddb'
+          }
+        };
+      });
+
+      it('should surround with a query storage', () => {
+        expect(cr.signatureSubStorage(database)).toEqual({
+          type: 'query',
+          sub_storage: {
+            type: 'indexeddb',
+            database
+          }
+        });
+      });
+    });
+
+    describe('using any other storage', () => {
+      beforeEach(() => {
+        cr.options = {
+          localStorage: {
+            type: 'storage'
+          }
+        };
+      });
+
+      it('should set the database', () => {
+        expect(cr.signatureSubStorage(database)).toEqual({
+          type: 'storage',
+          database
+        });
+      });
     });
   });
 

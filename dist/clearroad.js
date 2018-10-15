@@ -1,6 +1,6 @@
 import RSVP from 'rsvp';
 import Rusha from 'rusha';
-require('../node/lib/jio.js');
+const jIO = require('../node/lib/jio.js').jIO;
 import { validateDefinition } from './definitions/index';
 const queryPortalType = 'portal_type';
 var PortalTypes;
