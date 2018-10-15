@@ -42,3 +42,18 @@ export interface IJioProxyStorage extends IJioStorage {
     allDocs: (options?: IJioQueryOptions) => IQueue;
     repair: () => IQueue;
 }
+/**
+ * Output of `jIO.QueryFactory.create(query)`
+ */
+export interface IJioSimpleQuery {
+    operator?: 'AND' | 'OR';
+    key: string;
+    value: string;
+}
+/**
+ * Output of `jIO.QueryFactory.create(query)`
+ */
+export interface IJioComplexQuery {
+    operator: 'AND' | 'OR';
+    query_list: Array<IJioSimpleQuery | IJioComplexQuery>;
+}
